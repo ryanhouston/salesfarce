@@ -1,6 +1,6 @@
 # SalesFarce!
 
-This is a just a simple little proof-of-concept for creating an application
+This is just a simple little proof-of-concept for creating an application
 that integrates with SalesForce via OAuth2 authentication and the Salesforce
 REST API through use of the
 [databasedotcom](http://github.com/heroku/databasedotcom) gem.
@@ -23,9 +23,11 @@ will provide the credentials to authenticate with OAuth2.
   __Consumer Secret__ values for your new Salesforce Remote Access Application
 - Once you've cloned this project run the following in your shell:
 
-    $ bundle install
-    $ ruby init.rb
-    $ open http://localhost:3000
+```
+$ bundle install
+$ ruby init.rb
+$ open http://localhost:3000
+```
 
 There's really nothing good here. I warned you.
 
