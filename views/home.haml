@@ -1,10 +1,4 @@
-.notice
-  %p= @notice
-
-%p
-  %a{:href => "/auth/salesforce"}
-    Login via OAuth on Salesforce
-
-%p
-  %a{:href => "/users"}
-    List Users
+- if @authenticated
+  %p
+    %a{:href => "/users"}
+      List Users
