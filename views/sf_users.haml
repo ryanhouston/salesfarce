@@ -1,0 +1,8 @@
+%h2 Salesforce Users
+
+.users
+  - @users.each do |user|
+    .user
+      %h3= user.name
+      %p= user.raw_hash[:title] || "No title"
+      %p= user.raw_hash.inspect

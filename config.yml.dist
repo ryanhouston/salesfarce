@@ -1,3 +1,0 @@
-salesforce:
-  client_id: <salesforce app client key>
-  client_secret: <salesforce app secret key>
