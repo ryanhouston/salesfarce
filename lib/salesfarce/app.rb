@@ -43,7 +43,8 @@ module Salesfarce
     end
 
     get '/users' do
-      @users = Databasedotcom::Chatter::User.all(session[:client])
+      session[:client].materialize('User')
+      @users = User.all
 
       haml :sf_users
     end

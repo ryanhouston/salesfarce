@@ -3,6 +3,10 @@
 .users
   - @users.each do |user|
     .user
-      %h3= user.name
-      %p= user.raw_hash[:title] || "No title"
-      %p= user.raw_hash.inspect
+      %h3= user.Name
+      %p= 'Username: ' + (user.Username || '')
+      %p= 'First name: ' + (user.FirstName || '')
+      %p= 'Last name: ' + (user.LastName || '')
+      %p= 'Company: ' + (user.CompanyName || '')
+      %p= 'Title: ' + (user.Title || '')
+      %p= user.inspect
