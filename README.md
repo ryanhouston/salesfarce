@@ -28,7 +28,7 @@ $ bundle install
 $ ruby init.rb
 ```
 
-Then open your browser to [](http://localhost:3000)
+Then open your browser to [http://localhost:3000](http://localhost:3000/)
 
 There's really nothing good here. I warned you.
 
