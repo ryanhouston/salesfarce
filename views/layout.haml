@@ -3,17 +3,14 @@
   %head
     %title SalesFarce
   %body
+    #header
+      %h1 SalesFarce User Tool
+      - if @authenticated
+        %a{:href => '/logout'} Logout
+      - else
+        %a{:href => "/auth/salesforce"} Login via OAuth on Salesforce
+
+      .flash_message= @flash[:notice] if @flash[:notice]
 
     #content
-      %h1 SalesFarce User Tool
-      .flash_message
-        = @flash[:notice] if @flash[:notice]
-
-      - if @authenticated
-        %a{:href => '/logout'}
-          Logout
-      - else
-        %a{:href => "/auth/salesforce"}
-          Login via OAuth on Salesforce
-
       = yield
