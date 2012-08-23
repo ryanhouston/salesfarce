@@ -2,6 +2,7 @@ class User
   include DataMapper::Resource
 
   property :id,             Serial  # auto-increment integer PK
+  property :username,       String, :required => true
   property :first_name,     String
   property :last_name,      String, :required => true
   property :company,        String
