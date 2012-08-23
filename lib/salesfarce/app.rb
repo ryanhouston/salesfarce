@@ -6,6 +6,8 @@ require 'oa-oauth'
 require 'databasedotcom'
 require 'salesforce_strategy'
 require 'data_mapper'
+require 'salesfarce/user'
+
 
 module Salesfarce
   class App < Sinatra::Base
@@ -15,14 +17,23 @@ module Salesfarce
       set :views, File.expand_path('../../../views', __FILE__)
       enable :sessions
 
+      DataMapper.finalize
+
       @sf_config ||= YAML.load_file('config/salesforce.yml')
     end
 
-    configure :development do
-      enable :logging
-      DataMapper::Logger.new($stdout, :debug)
-      DataMapper.setup(:default, 'sqlite::memory:')
+    configure :production do
+      db_file = File.join("sqlite3://", settings.root, "data/production.db")
+      DataMapper.setup(:default, db_file)
+      DataMapper.auto_upgrade!
     end
+
+    configure :development, :test do
+      DataMapper.setup(:default, 'sqlite3::memory:')
+      DataMapper::Logger.new($stdout, :debug)
+      DataMapper.auto_migrate!
+    end
+
 
     use OmniAuth::Strategies::Salesforce, @sf_config['client_id'], @sf_config['client_secret']
 
