@@ -16,9 +16,11 @@ module Salesfarce
       set :port, 3000
       set :root, File.expand_path('../../../', __FILE__)
       set :views, File.expand_path('../../../views', __FILE__)
+      enable :method_override
       enable :sessions
 
       DataMapper.finalize
+      DataMapper::Model.raise_on_save_failure
 
       @sf_config ||= YAML.load_file('config/salesforce.yml')
     end
@@ -56,8 +58,23 @@ module Salesfarce
       unless (session[:client])
         @flash[:notice] = 'You are not authenticated'
         @authenticated = false
-        redirect to('/') unless (request.path_info == '/' || /\/auth\/salesforce/.match(request.path_info))
+        redirect to('/') if protected_routes.include? request.path_info
       end
+    end
+
+    def protected_routes
+      ['/sf_users']
+    end
+
+    get '/auth/salesforce/callback' do
+      session[:client] = Databasedotcom::Client.new("config/salesforce.yml")
+      session[:client].authenticate request.env['omniauth.auth']
+      redirect to("/")
+    end
+
+    get '/logout' do
+      session[:client] = nil
+      redirect to('/')
     end
 
     get '/' do
@@ -71,15 +88,54 @@ module Salesfarce
       haml :sf_users
     end
 
-    get '/auth/salesforce/callback' do
-      session[:client] = Databasedotcom::Client.new("config/salesforce.yml")
-      session[:client].authenticate request.env['omniauth.auth']
-      redirect to("/")
+    get '/users' do
+      @users = Salesfarce::User.all
+
+      haml :users
     end
 
-    get '/logout' do
-      session[:client] = nil
-      redirect to('/')
+    get '/user/new' do
+      @user = Salesfarce::User.new
+
+      haml :user_new
+    end
+
+    post '/user/create' do
+      @user_params = params[:user]
+      @user = Salesfarce::User.create(
+        :created_at => Time.now,
+        :username => @user_params[:username],
+        :first_name => @user_params[:first_name],
+        :last_name => @user_params[:last_name],
+        :company => @user_params[:company],
+        :title   => @user_params[:title],
+        :phone   => @user_params[:phone],
+        :mobile_phone => @user_params[:mobile_phone],
+        :bio => @user_params[:bio]
+      )
+
+      redirect to('/user/' + @user.id.to_s)
+    end
+
+    get '/user/:id' do
+      @user = Salesfarce::User.get(params[:id])
+
+      @user ? haml(:user) : 404
+    end
+
+    get '/user/:id/edit' do
+      @user = Salesfarce::User.get(params[:id])
+
+      haml :user_edit
+    end
+
+    put '/user/:id/update' do
+      @user_params = params[:user]
+      @user = Salesfarce::User.get(params[:id])
+
+      # TODO actually update with the given params
+
+      redirect to("/user/#{@user.id}")
     end
 
     def self.start

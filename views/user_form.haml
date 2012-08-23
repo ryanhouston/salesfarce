@@ -1,0 +1,55 @@
+- is_new = @user.id.nil?
+%form{:action => is_new ? '/user/create' : "/user/#{@user.id}/update", :method => 'post'}
+  - unless is_new
+    %input{:type => 'hidden', :name => '_method', :value => 'PUT'}
+  - else
+    .field
+      .label Username
+      .value
+        %input{:type => 'textfield', :name => 'user[username]', :value => @user.username || ''}
+
+  .field
+    .label First Name
+    .value
+      %input{ :type => 'textfield',
+              :name => 'user[first_name]',
+              :value => @user.first_name || ''}
+  .field
+    .label Last Name
+    .value
+      %input{ :type => 'textfield',
+              :name => 'user[last_name]',
+              :value => @user.last_name || ''}
+  .field
+    .label Company
+    .value
+      %input{ :type => 'textfield',
+              :name => 'user[company]',
+              :value => @user.company || ''}
+  .field
+    .label Title
+    .value
+      %input{ :type => 'textfield',
+              :name => 'user[title]',
+              :value => @user.title || ''}
+  .field
+    .label Phone
+    .value
+      %input{ :type => 'textfield',
+              :name => 'user[phone]',
+              :value => @user.phone || ''}
+  .field
+    .label Mobile Phone
+    .value
+      %input{ :type => 'textfield',
+              :name => 'user[mobile_phone]',
+              :value => @user.mobile_phone || ''}
+  .field
+    .label About Me
+    .value
+      %textarea{ :name => 'user[bio]',
+                 :value => @user.bio || ''}
+
+  .field
+    - submit_text = is_new ? 'Create' : 'Update'
+    %input{:type => 'submit', :value => submit_text + ' User' }

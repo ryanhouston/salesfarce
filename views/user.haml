@@ -1,0 +1,22 @@
+- user = @user unless user
+.user
+  %h3= user.name
+  %a{:href => "/user/#{user.id}/edit"} Edit
+  %dl
+    %dt Username
+    %dd= (user.username || '')
+    %dt First name
+    %dd= (user.first_name || '')
+    %dt Last name
+    %dd= (user.last_name || '')
+    %dt Company
+    %dd= (user.company || '')
+    %dt Title
+    %dd= (user.title || '')
+    %dt Phone
+    %dd= (user.phone || '')
+    %dt Mobile Phone
+    %dd= (user.mobile_phone || '')
+    %dt About Me
+    %dd= (user.bio || '')
+

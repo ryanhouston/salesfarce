@@ -1,0 +1,8 @@
+%h2 Salesfarce User List
+
+.users
+  - if @users.empty?
+    %strong No users exist yet
+
+  - @users.each do |user|
+    = haml :user, :locals => { :user => user }
