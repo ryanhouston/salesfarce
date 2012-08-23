@@ -2,11 +2,5 @@
 
 .users
   - @users.each do |user|
-    .user
-      %h3= user.Name
-      %p= 'Username: ' + (user.Username || '')
-      %p= 'First name: ' + (user.FirstName || '')
-      %p= 'Last name: ' + (user.LastName || '')
-      %p= 'Company: ' + (user.CompanyName || '')
-      %p= 'Title: ' + (user.Title || '')
-      %p= user.inspect
+    = haml :sf_user, :locals => {:user => user}
+

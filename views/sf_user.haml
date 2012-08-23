@@ -1,0 +1,23 @@
+.user
+  %h3= user.Name
+  %img{ :src => user.SmallPhotoUrl }
+  %dl
+    %dt Username
+    %dd= (user.Username || '')
+    %dt First name
+    %dd= (user.FirstName || '')
+    %dt Last name
+    %dd= (user.LastName || '')
+    %dt Company
+    %dd= (user.CompanyName || '')
+    %dt Title
+    %dd= (user.Title || '')
+    %dt Phone
+    %dd= (user.Phone || '')
+    %dt Mobile Phone
+    %dd= (user.MobilePhone || '')
+    %dt About Me
+    %dd= (user.AboutMe || '')
+
+  %p&= user.inspect
+
