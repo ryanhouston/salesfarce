@@ -14,6 +14,7 @@ module Salesfarce
 
     configure do
       set :port, 3000
+      set :root, File.expand_path('../../../', __FILE__)
       set :views, File.expand_path('../../../views', __FILE__)
       enable :sessions
 
@@ -29,7 +30,8 @@ module Salesfarce
     end
 
     configure :development, :test do
-      DataMapper.setup(:default, 'sqlite3::memory:')
+      db_file = File.join("sqlite3://", settings.root, "data/development.db")
+      DataMapper.setup(:default, db_file)
       DataMapper::Logger.new($stdout, :debug)
       DataMapper.auto_migrate!
     end
@@ -62,7 +64,7 @@ module Salesfarce
       haml :home
     end
 
-    get '/users' do
+    get '/sf_users' do
       session[:client].materialize('User')
       @users = User.all
 
