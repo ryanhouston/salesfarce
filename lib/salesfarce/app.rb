@@ -10,8 +10,6 @@ require 'salesfarce/user'
 
 
 module Salesfarce
-  module SObject; end;
-
   class App < Sinatra::Base
 
     configure do
