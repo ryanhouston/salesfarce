@@ -19,7 +19,9 @@ module Salesfarce
       set :root, File.expand_path('../../../', __FILE__)
       enable :method_override
       enable :sessions
+      enable :logging
 
+      DataMapper::Logger.new($stdout, :debug)
       DataMapper.finalize
       DataMapper::Model.raise_on_save_failure
 
@@ -35,7 +37,6 @@ module Salesfarce
     configure :development, :test do
       db_file = File.join("sqlite3://", settings.root, "data/development.db")
       DataMapper.setup(:default, db_file)
-      DataMapper::Logger.new($stdout, :debug)
       DataMapper.auto_migrate!
     end
 
@@ -114,14 +115,13 @@ module Salesfarce
 
       session[:client].materialize('User')
       sf_user = SObject::User.find(params[:soid])
-puts sf_user.inspect
 
       if sf_user
         user = Salesfarce::SObjectImporter.import(sf_user)
         if user.save
           redirect to("/user/#{user.id}")
         else
-          flash_message(:error) << user.errors
+          user.errors.each { |e| flash_message(:error) << e }
           redirect to('/sf_users')
         end
       end

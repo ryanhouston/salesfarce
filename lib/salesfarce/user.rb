@@ -3,7 +3,7 @@ module Salesfarce
     include DataMapper::Resource
 
     property :id,             Serial  # auto-increment integer PK
-    property :username,       String, :required => true, :unique => true
+    property :username,       String, :required => true, :unique => true, :length => 0..255
     property :first_name,     String
     property :last_name,      String, :required => true
     property :company,        String
@@ -18,6 +18,14 @@ module Salesfarce
 
     def name
       first_name + ' ' + last_name
+    end
+
+    def first_name
+      super || ''
+    end
+
+    def last_name
+      super || ''
     end
   end
 end

@@ -4,7 +4,7 @@ module Salesfarce
     # Returns a Salesfarce::User created from given the Databasedotcom::Sobject
     # User representation
     def self.import(sobject_user)
-      user = Salesfarce::User.new(
+      user_attrs = {
         :username => sobject_user.Username,
         :first_name => sobject_user.FirstName,
         :last_name => sobject_user.LastName,
@@ -17,7 +17,8 @@ module Salesfarce
         :small_photo => sobject_user.SmallPhotoUrl,
         :created_at => Time.now,
         :salesforce_id => sobject_user.Id
-      )
+      }.reject { |key, value| value.nil? }
+      user = Salesfarce::User.new(user_attrs)
     end
   end
 end
