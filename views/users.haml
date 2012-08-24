@@ -5,4 +5,4 @@
     %strong No users exist yet
 
   - @users.each do |user|
-    = haml :user, :locals => { :user => user }
+    %a{:href => "/user/#{user.id}"}= user.name + " - " + user.username

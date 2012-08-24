@@ -1,6 +1,7 @@
 - user = @user unless user
 .user
-  %h3= user.name
+  %h3
+    %a{:href => "/user/#{user.id}"}= user.name
   %a{:href => "/user/#{user.id}/edit"} Edit
   %dl
     %dt Username

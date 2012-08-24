@@ -176,7 +176,8 @@ module Salesfarce
       @user = Salesfarce::User.get(params[:id])
 
       @nav_active = :users
-      @user ? haml(:user) : 404
+      @profile_nav_active = :info
+      @user ? haml(:user_profile) : 404
     end
 
     get '/user/:id/edit' do
