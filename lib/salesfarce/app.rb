@@ -97,6 +97,8 @@ module Salesfarce
     end
 
     get '/' do
+      @nav_active = :home
+
       haml :home
     end
 
@@ -104,18 +106,21 @@ module Salesfarce
       session[:client].materialize('User')
       @users = SObject::User.all
 
+      @nav_active = :sf_users
       haml :sf_users
     end
 
     get '/users' do
       @users = Salesfarce::User.all
 
+      @nav_active = :users
       haml :users
     end
 
     get '/user/new' do
       @user = Salesfarce::User.new
 
+      @nav_active = :create_user
       haml :user_new
     end
 
@@ -130,6 +135,8 @@ module Salesfarce
       end
 
       flash[:user_form_errors] = @user.errors.collect{|e| e.to_s}
+
+      @nav_active = :create_user
       haml :user_new
     end
 
@@ -149,6 +156,7 @@ module Salesfarce
     get '/user/:id' do
       @user = Salesfarce::User.get(params[:id])
 
+      @nav_active = :users
       @user ? haml(:user) : 404
     end
 
@@ -167,6 +175,7 @@ module Salesfarce
         redirect to("/user/#{@user.id}")
       end
 
+      @nav_active = :create_user
       flash[:user_form_errors] = @user.errors.collect{|e| e.to_s}
       haml :user_edit
     end

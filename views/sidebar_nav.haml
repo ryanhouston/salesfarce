@@ -1,7 +1,7 @@
 .well.sidebar-nav.span2
   %ul.nav.nav-list
     %li.nav-header Menu
-    %li
+    %li{:class => "#{@nav_active == :home ? 'active' : ''}"}
       %a{:href => '/'} Home
     - if @authenticated
       %li
@@ -11,9 +11,9 @@
         %a{:href => "/auth/salesforce"} Login via OAuth on Salesforce
     %li.divider
     - if @authenticated
-      %li
+      %li{:class => "#{@nav_active == :sf_users ? 'active' : ''}"}
         %a{:href => "/sf_users"} List SalesForce Users
-    %li
+    %li{:class => "#{@nav_active == :create_user ? 'active' : ''}"}
       %a{:href => "/user/new"} Create User
-    %li
+    %li{:class => "#{@nav_active == :users ? 'active' : ''}"}
       %a{:href => "/users" } List Users
