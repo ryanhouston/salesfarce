@@ -1,9 +1,9 @@
 .user.row
   .namecard.span3
     %h3= user.Name
+    %img{ :src => user.FullPhotoUrl + "?oauth_token=#{session[:client].oauth_token}" }
     .controls
       %a.btn{:href => "/users/sobject?soid=#{user.Id}"} Import From Salesforce
-    %img{ :src => user.SmallPhotoUrl }
   .span4
     %dl
       .row
