@@ -31,5 +31,6 @@
                 %a{:href => "/users" } List Users
         .content.span8.offset4
           %h1 SalesFarce User Tool
-          .flash_message= @flash[:notice] if @flash[:notice]
+          - if flash[:notice]
+            .alert= flash[:notice]
           = yield

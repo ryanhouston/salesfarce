@@ -1,5 +1,6 @@
 require 'yaml'
 require 'sinatra/base'
+require 'rack-flash'
 require 'haml'
 require 'omniauth'
 require 'oa-oauth'
@@ -11,6 +12,7 @@ require 'salesfarce/user'
 
 module Salesfarce
   class App < Sinatra::Base
+    use Rack::Flash, :sweep => true
 
     configure do
       set :port, 3000
@@ -44,16 +46,12 @@ module Salesfarce
       exception = env['sinatra.error']
       if exception.error_code == "INVALID_SESSION_ID"
         session[:client] = nil
-        @flash[:notice] = "Your session expired and you were logged out!"
+        flash[:notice] = "Your session expired and you were logged out!"
       else
-        @flash[:notice] = "#{exception.error_code}: #{exception.message}"
+        flash[:notice] = "#{exception.error_code}: #{exception.message}"
       end
 
-      haml :error
-    end
-
-    not_found do
-      haml :not_found
+      redirect to('/')
     end
 
     error do
@@ -62,12 +60,15 @@ module Salesfarce
       haml :error
     end
 
+    not_found do
+      haml :not_found
+    end
+
     before do
       @authenticated = true
-      @flash = {}
 
       unless (session[:client])
-        @flash[:notice] = 'You are not authenticated'
+        flash[:notice] = 'You are not authenticated with Salesforce'
         @authenticated = false
         redirect to('/') if protected_routes.include? request.path_info
       end
