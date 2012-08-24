@@ -3,16 +3,16 @@
   %head
     %title SalesFarce
     %link{:rel => 'shortcut icon', :href => 'https://na9.salesforce.com/favicon.ico'}
-    %link{:rel => 'stylesheet', :href => '/css/site.css'}
     %link{:rel => 'stylesheet', :href => '/css/bootstrap.min.css'}
+    %link{:rel => 'stylesheet', :href => '/css/site.css'}
     %script{:src => '/js/bootstrap.min.js'}
   %body
     .container
       .row
         .sidebar
           = haml :sidebar_nav
-        .content.span9.offset3
-          .hero-unit
+        .content.span10.offset2
+          .page-header
             %h1.center SalesFarce
 
           - if flash.has?(:success)

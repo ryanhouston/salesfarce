@@ -5,4 +5,5 @@
     %strong No users exist yet
 
   - @users.each do |user|
-    %a{:href => "/user/#{user.id}"}= user.name + " - " + user.username
+    .user-result
+      %a{:href => "/user/#{user.id}"}= user.name + " - " + user.username
