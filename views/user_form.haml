@@ -1,13 +1,17 @@
 - is_new = @user.id.nil?
+- if flash.has?(:user_form_errors)
+  - flash[:user_form_errors].each do |e|
+    .alert-error= e
+
 %form.form-horizontal{:action => is_new ? '/user/create' : "/user/#{@user.id}/update", :method => 'post'}
-  - unless is_new
-    %input{:type => 'hidden', :name => '_method', :value => 'PUT'}
-  - else
-    .row
-      .control-group.span4
-        %label.control-label{:for => 'user[username]'} Username
-        .controls
-          %input{:type => 'textfield', :name => 'user[username]', :value => @user.username || ''}
+  .row
+    .control-group.span4
+      %label.control-label{:for => 'user[username]'} Username
+      .controls
+        - unless is_new
+          %input{:type => 'hidden', :name => '_method', :value => 'PUT'}
+          %span.input-xlarge.uneditable-input= @user.username
+        %input{:type => is_new ? 'textfield' : 'hidden', :name => 'user[username]', :value => @user.username || ''}
 
   .row
     .control-group.span4

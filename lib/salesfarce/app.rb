@@ -114,21 +114,25 @@ module Salesfarce
     end
 
     post '/user/create' do
-      @user_params = params[:user]
-      @user = Salesfarce::User.create(
-        :created_at => Time.now,
-        :username => @user_params[:username],
-        :first_name => @user_params[:first_name],
-        :last_name => @user_params[:last_name],
-        :company => @user_params[:company],
-        :title   => @user_params[:title],
-        :phone   => @user_params[:phone],
-        :mobile_phone => @user_params[:mobile_phone],
-        :bio => @user_params[:bio]
-      )
+      user_params = process_user_form_params params[:user]
+      user_params[:created_at] = Time.now
+      user = Salesfarce::User.create(user_params)
 
       flash[:notice] = "New User Created!"
-      redirect to('/user/' + @user.id.to_s)
+      redirect to('/user/' + user.id.to_s)
+    end
+
+    def process_user_form_params user_params
+      {
+        :username => user_params[:username],
+        :first_name => user_params[:first_name],
+        :last_name => user_params[:last_name],
+        :company => user_params[:company],
+        :title   => user_params[:title],
+        :phone   => user_params[:phone],
+        :mobile_phone => user_params[:mobile_phone],
+        :bio => user_params[:bio]
+      }
     end
 
     get '/user/:id' do
@@ -144,12 +148,16 @@ module Salesfarce
     end
 
     put '/user/:id/update' do
-      @user_params = params[:user]
+      user_params = process_user_form_params params[:user]
       @user = Salesfarce::User.get(params[:id])
 
-      # TODO actually update with the given params
+      if @user.update(user_params)
+        flash[:notice] = "User successfully updated"
+        redirect to("/user/#{@user.id}")
+      end
 
-      redirect to("/user/#{@user.id}")
+      flash[:user_form_errors] = @user.errors.collect{|e| e.to_s}
+      haml :user_edit
     end
 
     def self.start
