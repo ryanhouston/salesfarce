@@ -52,8 +52,7 @@
     .control-group.span4
       %label.control-label About Me
       .controls
-        %textarea{ :name => 'user[bio]',
-                   :value => @user.bio || ''}
+        %textarea{ :name => 'user[bio]' }= @user.bio || ''
 
   .row
     .control-group.offset2
