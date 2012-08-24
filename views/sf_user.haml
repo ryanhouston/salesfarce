@@ -1,21 +1,34 @@
-.user
-  %h3= user.Name
-  %img{ :src => user.SmallPhotoUrl }
-  %dl
-    %dt Username
-    %dd= (user.Username || '')
-    %dt First name
-    %dd= (user.FirstName || '')
-    %dt Last name
-    %dd= (user.LastName || '')
-    %dt Company
-    %dd= (user.CompanyName || '')
-    %dt Title
-    %dd= (user.Title || '')
-    %dt Phone
-    %dd= (user.Phone || '')
-    %dt Mobile Phone
-    %dd= (user.MobilePhone || '')
-    %dt About Me
-    %dd= (user.AboutMe || '')
+.user.row
+  .namecard.span3
+    %h3= user.Name
+    %img{ :src => user.SmallPhotoUrl }
+  .span4
+    %dl
+      .row
+        .span2
+          %dt Username
+          %dd= (user.Username || '')
+      .row
+        .span2
+          %dt First name
+          %dd= (user.FirstName || '')
+        .span2
+          %dt Last name
+          %dd= (user.LastName || '')
+      .row
+        .span2
+          %dt Company
+          %dd= (user.CompanyName || '')
+        .span2
+          %dt Title
+          %dd= (user.Title || '')
+      .row
+        .span2
+          %dt Phone
+          %dd= (user.Phone || '')
+        .span2
+          %dt Mobile Phone
+          %dd= (user.MobilePhone || '')
+      %dt About Me
+      %dd= (user.AboutMe || '')
 
