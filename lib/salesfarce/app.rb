@@ -48,10 +48,18 @@ module Salesfarce
       else
         @flash[:notice] = "#{exception.error_code}: #{exception.message}"
       end
+
+      haml :error
     end
 
     not_found do
       haml :not_found
+    end
+
+    error do
+      @exception = exception
+
+      haml :error
     end
 
     before do
