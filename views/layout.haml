@@ -3,12 +3,13 @@
   %head
     %title SalesFarce
     %link{:rel => 'shortcut icon', :href => 'https://na9.salesforce.com/favicon.ico'}
+    %link{:rel => 'stylesheet', :href => '/css/site.css'}
     %link{:rel => 'stylesheet', :href => '/css/bootstrap.min.css'}
     %script{:src => '/js/bootstrap.min.js'}
   %body
-    .container-fluid
-      .row-fluid
-        .span3
+    .container
+      .row
+        .sidebar.span3
           .well.sidebar-nav
             %ul.nav.nav-list
               %li.nav-header Menu
@@ -28,7 +29,7 @@
                 %a{:href => "/user/new"} Create User
               %li
                 %a{:href => "/users" } List Users
-        .span9
+        .content.span9.offset3
           %h1 SalesFarce User Tool
           .flash_message= @flash[:notice] if @flash[:notice]
           = yield
