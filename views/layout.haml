@@ -11,6 +11,7 @@
         .span3
           .well.sidebar-nav
             %ul.nav.nav-list
+              %li.nav-header Menu
               %li
                 %a{:href => '/'} Home
               - if @authenticated
@@ -19,6 +20,7 @@
               - else
                 %li
                   %a{:href => "/auth/salesforce"} Login via OAuth on Salesforce
+              %li.divider
               - if @authenticated
                 %li
                   %a{:href => "/sf_users"} List SalesForce Users
