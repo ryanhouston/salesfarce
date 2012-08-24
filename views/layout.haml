@@ -2,19 +2,31 @@
 %html
   %head
     %title SalesFarce
-    %link{:rel => "shortcut icon", :href=>"https://na9.salesforce.com/favicon.ico"}
+    %link{:rel => 'shortcut icon', :href => 'https://na9.salesforce.com/favicon.ico'}
+    %link{:rel => 'stylesheet', :href => 'css/bootstrap.min.css'}
+    %script{:src => 'js/bootstrap.min.js'}
   %body
-    #header
-      %h1 SalesFarce User Tool
-
-      .nav
-        %a{:href => '/'} Home
-        - if @authenticated
-          %a{:href => '/logout'} Logout
-        - else
-          %a{:href => "/auth/salesforce"} Login via OAuth on Salesforce
-
-      .flash_message= @flash[:notice] if @flash[:notice]
-
-    #content
-      = yield
+    .container-fluid
+      .row-fluid
+        .span3
+          .well.sidebar-nav
+            %ul.nav.nav-list
+              %li
+                %a{:href => '/'} Home
+              - if @authenticated
+                %li
+                  %a{:href => '/logout'} Logout
+              - else
+                %li
+                  %a{:href => "/auth/salesforce"} Login via OAuth on Salesforce
+              - if @authenticated
+                %li
+                  %a{:href => "/sf_users"} List SalesForce Users
+              %li
+                %a{:href => "/user/new"} Create User
+              %li
+                %a{:href => "/users" } List Users
+        .span9
+          %h1 SalesFarce User Tool
+          .flash_message= @flash[:notice] if @flash[:notice]
+          = yield
