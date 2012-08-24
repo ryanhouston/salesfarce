@@ -50,6 +50,10 @@ module Salesfarce
       end
     end
 
+    not_found do
+      haml :not_found
+    end
+
     before do
       @authenticated = true
       @flash = {}

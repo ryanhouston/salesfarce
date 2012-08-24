@@ -9,7 +9,7 @@
   %body
     .container
       .row
-        .sidebar.span3
+        .sidebar.span4
           .well.sidebar-nav
             %ul.nav.nav-list
               %li.nav-header Menu
@@ -29,7 +29,7 @@
                 %a{:href => "/user/new"} Create User
               %li
                 %a{:href => "/users" } List Users
-        .content.span9.offset3
+        .content.span8.offset4
           %h1 SalesFarce User Tool
           .flash_message= @flash[:notice] if @flash[:notice]
           = yield
