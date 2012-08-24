@@ -127,6 +127,7 @@ module Salesfarce
         :bio => @user_params[:bio]
       )
 
+      flash[:notice] = "New User Created!"
       redirect to('/user/' + @user.id.to_s)
     end
 

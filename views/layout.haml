@@ -9,8 +9,8 @@
   %body
     .container
       .row
-        .sidebar.span4
-          .well.sidebar-nav
+        .sidebar
+          .well.sidebar-nav.span2
             %ul.nav.nav-list
               %li.nav-header Menu
               %li
@@ -29,7 +29,7 @@
                 %a{:href => "/user/new"} Create User
               %li
                 %a{:href => "/users" } List Users
-        .content.span8.offset4
+        .content.span9.offset3
           %h1 SalesFarce User Tool
           - if flash[:notice]
             .alert= flash[:notice]

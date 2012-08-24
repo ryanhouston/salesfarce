@@ -4,7 +4,7 @@
     %input{:type => 'hidden', :name => '_method', :value => 'PUT'}
   - else
     .row
-      .control-group
+      .control-group.span4
         %label.control-label{:for => 'user[username]'} Username
         .controls
           %input{:type => 'textfield', :name => 'user[username]', :value => @user.username || ''}
@@ -16,7 +16,7 @@
         %input{ :type => 'textfield',
                 :name => 'user[first_name]',
                 :value => @user.first_name || ''}
-    .control-group.span4.offset1
+    .control-group.span4
       %label.control-label Last Name
       .controls
         %input{ :type => 'textfield',
@@ -29,7 +29,7 @@
         %input{ :type => 'textfield',
                 :name => 'user[company]',
                 :value => @user.company || ''}
-    .control-group.span4.offset1
+    .control-group.span4
       %label.control-label Title
       .controls
         %input{ :type => 'textfield',
@@ -42,19 +42,20 @@
         %input{ :type => 'textfield',
                 :name => 'user[phone]',
                 :value => @user.phone || ''}
-    .control-group.span4.offset1
+    .control-group.span4
       %label.control-label Mobile Phone
       .controls
         %input{ :type => 'textfield',
                 :name => 'user[mobile_phone]',
                 :value => @user.mobile_phone || ''}
   .row
-    .control-group
+    .control-group.span4
       %label.control-label About Me
       .controls
         %textarea{ :name => 'user[bio]',
                    :value => @user.bio || ''}
 
+  .row
     .control-group.offset2
       - submit_text = is_new ? 'Create' : 'Update'
       %input.btn{:type => 'submit', :value => submit_text + ' User' }
