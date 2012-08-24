@@ -1,7 +1,7 @@
 - is_new = @user.id.nil?
 - if flash.has?(:user_form_errors)
   - flash[:user_form_errors].each do |e|
-    .alert-error= e
+    .alert.alert-error= e
 
 %form.form-horizontal{:action => is_new ? '/user/create' : "/user/#{@user.id}/update", :method => 'post'}
   .row

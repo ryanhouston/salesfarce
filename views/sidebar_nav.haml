@@ -1,0 +1,19 @@
+.well.sidebar-nav.span2
+  %ul.nav.nav-list
+    %li.nav-header Menu
+    %li
+      %a{:href => '/'} Home
+    - if @authenticated
+      %li
+        %a{:href => '/logout'} Logout
+    - else
+      %li
+        %a{:href => "/auth/salesforce"} Login via OAuth on Salesforce
+    %li.divider
+    - if @authenticated
+      %li
+        %a{:href => "/sf_users"} List SalesForce Users
+    %li
+      %a{:href => "/user/new"} Create User
+    %li
+      %a{:href => "/users" } List Users

@@ -46,9 +46,9 @@ module Salesfarce
       exception = env['sinatra.error']
       if exception.error_code == "INVALID_SESSION_ID"
         session[:client] = nil
-        flash[:notice] = "Your session expired and you were logged out!"
+        flash_message(:notice) << "Your session expired and you were logged out!"
       else
-        flash[:notice] = "#{exception.error_code}: #{exception.message}"
+        flash_message(:notice) << "#{exception.error_code}: #{exception.message}"
       end
 
       redirect to('/')
@@ -68,14 +68,20 @@ module Salesfarce
       @authenticated = true
 
       unless (session[:client])
-        flash[:notice] = 'You are not authenticated with Salesforce'
         @authenticated = false
-        redirect to('/') if protected_routes.include? request.path_info
+        if protected_routes.include? request.path_info
+          flash_message(:notice) << 'You are not authenticated with Salesforce'
+          redirect to('/')
+        end
       end
     end
 
     def protected_routes
       ['/sf_users']
+    end
+
+    def flash_message type
+      flash[type] ||= []
     end
 
     get '/auth/salesforce/callback' do
@@ -116,10 +122,15 @@ module Salesfarce
     post '/user/create' do
       user_params = process_user_form_params params[:user]
       user_params[:created_at] = Time.now
-      user = Salesfarce::User.create(user_params)
+      @user = Salesfarce::User.create(user_params)
 
-      flash[:notice] = "New User Created!"
-      redirect to('/user/' + user.id.to_s)
+      if @user.saved?
+        flash_message(:notice) << "New User Created!"
+        redirect to('/user/' + @user.id.to_s)
+      end
+
+      flash[:user_form_errors] = @user.errors.collect{|e| e.to_s}
+      haml :user_new
     end
 
     def process_user_form_params user_params
@@ -152,7 +163,7 @@ module Salesfarce
       @user = Salesfarce::User.get(params[:id])
 
       if @user.update(user_params)
-        flash[:notice] = "User successfully updated"
+        flash_message(:notice) << "User successfully updated"
         redirect to("/user/#{@user.id}")
       end
 
