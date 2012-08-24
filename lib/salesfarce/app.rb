@@ -10,12 +10,13 @@ require 'salesfarce/user'
 
 
 module Salesfarce
+  module SObject; end;
+
   class App < Sinatra::Base
 
     configure do
       set :port, 3000
       set :root, File.expand_path('../../../', __FILE__)
-      set :views, File.expand_path('../../../views', __FILE__)
       enable :method_override
       enable :sessions
 
@@ -69,6 +70,7 @@ module Salesfarce
     get '/auth/salesforce/callback' do
       session[:client] = Databasedotcom::Client.new("config/salesforce.yml")
       session[:client].authenticate request.env['omniauth.auth']
+      session[:client].sobject_module = Salesfarce::SObject
       redirect to("/")
     end
 
@@ -83,7 +85,7 @@ module Salesfarce
 
     get '/sf_users' do
       session[:client].materialize('User')
-      @users = User.all
+      @users = SObject::User.all
 
       haml :sf_users
     end
