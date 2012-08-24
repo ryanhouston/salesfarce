@@ -1,6 +1,8 @@
 .user.row
   .namecard.span3
     %h3= user.Name
+    .controls
+      %a.btn{:href => "/users/sobject?soid=#{user.Id}"} Import From Salesforce
     %img{ :src => user.SmallPhotoUrl }
   .span4
     %dl
@@ -8,6 +10,10 @@
         .span2
           %dt Username
           %dd= (user.Username || '')
+      .row
+        .span2
+          %dt Salesforce ID
+          %dd= (user.Id || '')
       .row
         .span2
           %dt First name

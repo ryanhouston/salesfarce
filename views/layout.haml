@@ -12,7 +12,8 @@
         .sidebar
           = haml :sidebar_nav
         .content.span9.offset3
-          %h1 SalesFarce User Tool
+          .hero-unit
+            %h1.center SalesFarce
 
           - if flash.has?(:success)
             - flash[:success].each do |msg|

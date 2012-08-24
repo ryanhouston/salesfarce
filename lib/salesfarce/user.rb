@@ -13,6 +13,7 @@ module Salesfarce
     property :bio,            Text
     property :large_photo,    FilePath
     property :small_photo,    FilePath
+    property :salesforce_id,  String
     property :created_at,     DateTime
 
     def name

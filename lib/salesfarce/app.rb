@@ -65,19 +65,14 @@ module Salesfarce
     end
 
     before do
-      @authenticated = true
-
-      unless (session[:client])
-        @authenticated = false
-        if protected_routes.include? request.path_info
-          flash_message(:notice) << 'You are not authenticated with Salesforce'
-          redirect to('/')
-        end
-      end
+      @authenticated = !!session[:client]
     end
 
-    def protected_routes
-      ['/sf_users']
+    def salesforce_protect
+      unless @authenticated
+        flash_message(:notice) << 'You are not authenticated with Salesforce'
+        redirect to('/')
+      end
     end
 
     def flash_message type
@@ -103,11 +98,35 @@ module Salesfarce
     end
 
     get '/sf_users' do
+      salesforce_protect
       session[:client].materialize('User')
       @users = SObject::User.all
 
       @nav_active = :sf_users
       haml :sf_users
+    end
+
+    # Yes this really should not happen from a GET request and the uri is not
+    # ideal but that's why it's a prototype
+    get '/users/sobject' do
+      raise "Must supply 'soid' paramter with sobject id" unless params[:soid]
+      salesforce_protect
+
+      session[:client].materialize('User')
+      sf_user = SObject::User.find(params[:soid])
+puts sf_user.inspect
+
+      if sf_user
+        user = Salesfarce::SObjectImporter.import(sf_user)
+        if user.save
+          redirect to("/user/#{user.id}")
+        else
+          flash_message(:error) << user.errors
+          redirect to('/sf_users')
+        end
+      end
+
+      404
     end
 
     get '/users' do
