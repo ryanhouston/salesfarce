@@ -1,55 +1,61 @@
 - is_new = @user.id.nil?
-%form{:action => is_new ? '/user/create' : "/user/#{@user.id}/update", :method => 'post'}
+%form.form-horizontal{:action => is_new ? '/user/create' : "/user/#{@user.id}/update", :method => 'post'}
   - unless is_new
     %input{:type => 'hidden', :name => '_method', :value => 'PUT'}
   - else
-    .field
-      .label Username
-      .value
-        %input{:type => 'textfield', :name => 'user[username]', :value => @user.username || ''}
+    .row
+      .control-group
+        %label.control-label{:for => 'user[username]'} Username
+        .controls
+          %input{:type => 'textfield', :name => 'user[username]', :value => @user.username || ''}
 
-  .field
-    .label First Name
-    .value
-      %input{ :type => 'textfield',
-              :name => 'user[first_name]',
-              :value => @user.first_name || ''}
-  .field
-    .label Last Name
-    .value
-      %input{ :type => 'textfield',
-              :name => 'user[last_name]',
-              :value => @user.last_name || ''}
-  .field
-    .label Company
-    .value
-      %input{ :type => 'textfield',
-              :name => 'user[company]',
-              :value => @user.company || ''}
-  .field
-    .label Title
-    .value
-      %input{ :type => 'textfield',
-              :name => 'user[title]',
-              :value => @user.title || ''}
-  .field
-    .label Phone
-    .value
-      %input{ :type => 'textfield',
-              :name => 'user[phone]',
-              :value => @user.phone || ''}
-  .field
-    .label Mobile Phone
-    .value
-      %input{ :type => 'textfield',
-              :name => 'user[mobile_phone]',
-              :value => @user.mobile_phone || ''}
-  .field
-    .label About Me
-    .value
-      %textarea{ :name => 'user[bio]',
-                 :value => @user.bio || ''}
+  .row
+    .control-group.span4
+      %label.control-label First Name
+      .controls
+        %input{ :type => 'textfield',
+                :name => 'user[first_name]',
+                :value => @user.first_name || ''}
+    .control-group.span4.offset1
+      %label.control-label Last Name
+      .controls
+        %input{ :type => 'textfield',
+                :name => 'user[last_name]',
+                :value => @user.last_name || ''}
+  .row
+    .control-group.span4
+      %label.control-label Company
+      .controls
+        %input{ :type => 'textfield',
+                :name => 'user[company]',
+                :value => @user.company || ''}
+    .control-group.span4.offset1
+      %label.control-label Title
+      .controls
+        %input{ :type => 'textfield',
+                :name => 'user[title]',
+                :value => @user.title || ''}
+  .row
+    .control-group.span4
+      %label.control-label Phone
+      .controls
+        %input{ :type => 'textfield',
+                :name => 'user[phone]',
+                :value => @user.phone || ''}
+    .control-group.span4.offset1
+      %label.control-label Mobile Phone
+      .controls
+        %input{ :type => 'textfield',
+                :name => 'user[mobile_phone]',
+                :value => @user.mobile_phone || ''}
+  .row
+    .control-group
+      %label.control-label About Me
+      .controls
+        %textarea{ :name => 'user[bio]',
+                   :value => @user.bio || ''}
 
-  .field
-    - submit_text = is_new ? 'Create' : 'Update'
-    %input{:type => 'submit', :value => submit_text + ' User' }
+    .control-group.offset2
+      - submit_text = is_new ? 'Create' : 'Update'
+      %input.btn{:type => 'submit', :value => submit_text + ' User' }
+
