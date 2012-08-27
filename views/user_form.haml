@@ -57,10 +57,10 @@
                 :name => 'user[mobile_phone]',
                 :value => @user.mobile_phone || ''}
   .row
-    .control-group.span4
+    .control-group.span9
       %label.control-label About Me
       .controls
-        %textarea{ :name => 'user[bio]' }= @user.bio || ''
+        %textarea{ :class => 'full-width', :rows => 5, :name => 'user[bio]' }= @user.bio || ''
 
   .row
     .control-group.offset2

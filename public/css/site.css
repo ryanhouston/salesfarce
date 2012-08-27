@@ -5,9 +5,14 @@
 .sidebar-nav {
   position: fixed;
   padding: 0;
+  margin-top: 60px;
 }
 
 .center {
   text-align: center;
+}
+
+.full-width {
+  width: 100%;
 }
 
