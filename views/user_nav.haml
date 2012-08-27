@@ -1,0 +1,6 @@
+%ul.nav.nav-tabs
+  %li{:class => @profile_nav_active == :info ? 'active' : ''}
+    %a{:href => "/user/#{@user.id}"} Info
+  %li{:class => @profile_nav_active == :chatter ? 'active' : @authenticated ? '' : 'disabled'}
+    %a{:href => "/user/#{@user.id}/chatter"} Chatter
+
