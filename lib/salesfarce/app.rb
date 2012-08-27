@@ -202,6 +202,16 @@ module Salesfarce
       haml :user_edit
     end
 
+    get '/user/:id/chatter' do
+      salesforce_protect
+
+      @user = Salesfarce::User.get(params[:id])
+      raise Sinatra::NotFound unless @user
+
+      @profile_nav_active = :chatter
+      haml(:user_chatter)
+    end
+
     def self.start
       run!
     end
