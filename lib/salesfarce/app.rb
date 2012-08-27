@@ -208,6 +208,10 @@ module Salesfarce
       @user = Salesfarce::User.get(params[:id])
       raise Sinatra::NotFound unless @user
 
+      @feeditems = Databasedotcom::Chatter::UserProfileFeed.find(
+        session[:client],
+        @user.salesforce_id)
+
       @profile_nav_active = :chatter
       haml(:user_chatter)
     end

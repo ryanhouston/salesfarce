@@ -1,2 +1,6 @@
 = haml :user_nav
-
+.feed-items
+  %ul
+  - @feeditems.each do |feed_item|
+    %li
+      .text= feed_item.raw_hash['actor']['name'] + ' ' + feed_item.raw_hash['body']['text']
