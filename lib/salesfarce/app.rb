@@ -129,6 +129,8 @@ module Salesfarce
       404
     end
 
+    # USER CRUD
+    #
     get '/users' do
       @users = Salesfarce::User.all
 
@@ -174,9 +176,10 @@ module Salesfarce
 
     get '/user/:id' do
       @user = Salesfarce::User.get(params[:id])
+      raise Sinatra::NotFound unless @user
 
       @profile_nav_active = :info
-      @user ? haml(:user_profile) : 404
+      haml(:user_profile)
     end
 
     get '/user/:id/edit' do
